@@ -1470,4 +1470,4 @@ class AccountingApp:
 
 if __name__ == '__main__':
     app = AccountingApp()
-    app.run()
+    app.run()# Test CI
