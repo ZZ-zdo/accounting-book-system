@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*. py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*. egg-info/
+dist/
+build/
+
+# 测试
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# 数据库
+*.db
+*. db-journal
+*.db-shm
+*.db-wal
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 项目特定
+crashes/
+logs/
+test_*. db
+fuzz_*.db
+*. bin
+manual_crash_*. txt
+
+# 系统文件
+.DS_Store
+Thumbs.db
