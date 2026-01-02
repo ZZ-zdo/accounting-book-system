@@ -159,8 +159,6 @@ class Database:
             return False, "用户名不能为空"
     
         username = username.strip()
-        if len(username) < 3:
-            return False, "用户名长度不能少于3个字符"
     
         if len(username) > 20:
             return False, "用户名长度不能超过20个字符"
