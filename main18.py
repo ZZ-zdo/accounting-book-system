@@ -328,6 +328,27 @@ class Database:
         conn = self.get_connection()
         cursor = conn.cursor()
         try:
+            # ✅ 验证账户是否存在且属于当前用户
+            cursor.execute(
+            'SELECT account_id FROM accounts WHERE account_id=? AND user_id=?',
+            (account_id, user_id)
+            )
+            account_result = cursor.fetchone()
+            if not account_result:
+                conn.close()
+                return False, "账户不存在或不属于当前用户"
+        
+            # ✅ 如果指定了标签,验证标签是否存在且属于当前用户
+            if tag_id:
+                cursor.execute(
+                'SELECT tag_id FROM tags WHERE tag_id=? AND user_id=?',
+                (tag_id, user_id)
+                )
+                tag_result = cursor.fetchone()
+                if not tag_result:
+                    conn.close()
+                    return False, "标签不存在或不属于当前用户"
+
             cursor.execute(
                 '''INSERT INTO bills (user_id, account_id, tag_id, bill_type, amount, bill_date, remark, 
                                      is_recurring, recurring_rule_id)
