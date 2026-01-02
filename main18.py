@@ -158,8 +158,26 @@ class Database:
         if not username or not username.strip():
             return False, "用户名不能为空"
     
+        username = username.strip()
+        if len(username) < 3:
+            return False, "用户名长度不能少于3个字符"
+    
+        if len(username) > 20:
+            return False, "用户名长度不能超过20个字符"
+
         if not password or not password.strip():
             return False, "密码不能为空"
+    
+        if len(password) < 3:
+            return False, "密码长度不能少于3个字符"
+    
+        if len(password) > 32:
+            return False, "密码长度不能超过32个字符"
+
+        if phone and phone.strip():
+            phone = phone.strip()
+            if not phone.isdigit():
+                return False, "手机号只能包含数字"
         try:
             conn = self.get_connection()
             cursor = conn.cursor()
