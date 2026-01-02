@@ -7,6 +7,48 @@ import calendar
 import threading
 import time
 
+import sqlite3
+import hashlib
+import sys
+import os
+
+# ✅ 检测是否在测试环境
+IS_TESTING = 'pytest' in sys.modules or 'PYTEST_CURRENT_TEST' in os. environ
+
+# 只在非测试环境导入 tkinter
+if not IS_TESTING:
+    import tkinter as tk
+    from tkinter import ttk, messagebox
+else:
+    # 测试环境下的 mock
+    print("Running in test mode, skipping tkinter import")
+    
+    class MockMessageBox:
+        @staticmethod
+        def showwarning(*args, **kwargs):
+            print(f"[MockWarning] {args}")
+        
+        @staticmethod
+        def showinfo(*args, **kwargs):
+            print(f"[MockInfo] {args}")
+        
+        @staticmethod
+        def showerror(*args, **kwargs):
+            print(f"[MockError] {args}")
+        
+        @staticmethod
+        def askyesno(*args, **kwargs):
+            print(f"[MockYesNo] {args}")
+            return True
+    
+    messagebox = MockMessageBox()
+
+from datetime import datetime, timedelta
+import calendar
+import threading
+import time
+
+
 
 class Database:
     """数据库管理类"""
@@ -1471,4 +1513,5 @@ class AccountingApp:
 if __name__ == '__main__':
     app = AccountingApp()
     app.run()
+# Test
 # Test
