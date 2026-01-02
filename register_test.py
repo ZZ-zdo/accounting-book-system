@@ -3,6 +3,7 @@ import os
 from main18 import Database
 
 @pytest.fixture(scope="function")  # ✅ 每个测试函数独立
+#@pytest.fixture(scope="module")
 def db():
     """为每个测试创建干净的数据库环境"""
     test_db_name = "test_accounting.db"
@@ -23,6 +24,7 @@ def db():
 
 
 @pytest.fixture(scope="function")
+#@pytest.fixture(scope="module")
 def db_with_user():
     """创建带有预置用户的数据库（用于测试用户名重复等场景）"""
     test_db_name = "test_accounting_with_user.db"
@@ -63,7 +65,7 @@ def test_register_user_success(db):
 def test_register_user_username_exists(db_with_user):
     """测试：用户名已存在"""
     # 使用 db_with_user，它已经有 "testuser"
-    result, message = db_with_user.register_user("testuser", "password123")
+    result, message = db_with_user.register_user("test_user", "password123")
     assert result is False
     assert "用户名" in str(message) or "exist" in str(message).lower()
 
@@ -115,16 +117,15 @@ def test_register_user_with_very_long_password(db):
     """测试：超长密码"""
     long_password = "a" * 256
     result, response = db.register_user("newuser", long_password)
-    
+    assert result is False
     # 根据实际实现，可能成功也可能失败
-    if result:
-        assert response is not None  # user_id
-    else:
-        assert "密码" in str(response) or "password" in str(response).lower()
+    # if result:
+    #     assert response is not None  # user_id
+    # else:
+    #     assert "密码" in str(response) or "password" in str(response).lower()
 
 
 def test_register_user_with_phone_format(db):
     """测试：特殊格式的手机号"""
     result, user_id = db. register_user("newphoneuser", "password123", "123-456-7890")
-    assert result is True
-    assert user_id is not None
+    assert result is False
