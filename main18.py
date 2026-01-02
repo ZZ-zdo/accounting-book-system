@@ -1534,7 +1534,4 @@ class AccountingApp:
 if __name__ == '__main__':
     app = AccountingApp()
     app.run()
-# Test
-# Test
-# CI test
-# CI test
+
