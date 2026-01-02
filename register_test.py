@@ -2,8 +2,8 @@ import pytest
 import os
 from main18 import Database
 
-@pytest.fixture(scope="function")  # ✅ 每个测试函数独立
-#@pytest.fixture(scope="module")
+#@pytest.fixture(scope="function")  # ✅ 每个测试函数独立
+@pytest.fixture(scope="module")
 def db():
     """为每个测试创建干净的数据库环境"""
     test_db_name = "test_accounting.db"
@@ -23,8 +23,8 @@ def db():
         os.remove(test_db_name)
 
 
-@pytest.fixture(scope="function")
-#@pytest.fixture(scope="module")
+#@pytest.fixture(scope="function")
+@pytest.fixture(scope="module")
 def db_with_user():
     """创建带有预置用户的数据库（用于测试用户名重复等场景）"""
     test_db_name = "test_accounting_with_user.db"
@@ -56,7 +56,7 @@ def db_with_user():
 
 def test_register_user_success(db):
     """测试：成功注册新用户"""
-    result, user_id = db.register_user("test_user", "password123")
+    result, user_id = db.register_user("testuser", "password123")
     assert result is True
     assert user_id is not None
     assert isinstance(user_id, int)
@@ -65,7 +65,8 @@ def test_register_user_success(db):
 def test_register_user_username_exists(db_with_user):
     """测试：用户名已存在"""
     # 使用 db_with_user，它已经有 "testuser"
-    result, message = db_with_user.register_user("test_user", "password123")
+    result, message = db_with_user.register_user("testuser", "password123")
+    
     assert result is False
     assert "用户名" in str(message) or "exist" in str(message).lower()
 
