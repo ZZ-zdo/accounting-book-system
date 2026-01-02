@@ -155,14 +155,14 @@ class Database:
         return hashlib.sha256(password.encode()).hexdigest()
     
     def register_user(self, username, password, phone=''):
-        if not username or username.strip() == '':
-            return False, "用户名不能为空"
+        # if not username or username.strip() == '':
+        #     return False, "用户名不能为空"
     
-        if not password or password.  strip() == '':
-            return False, "密码不能为空"
+        # if not password or password.  strip() == '':
+        #     return False, "密码不能为空"
     
-        if len(username) > 255:
-            return False, "用户名长度过长"
+        # if len(username) > 255:
+        #     return False, "用户名长度过长"
 
         try:
             conn = self.get_connection()
